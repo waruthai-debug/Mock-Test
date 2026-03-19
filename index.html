@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXCLUSIVE MOCK TEST - วิชาเอกภาษาอังกฤษ ครูผู้ช่วย</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* ซ่อน Scrollbar แถบตัวเลข แต่ยังเลื่อนได้ */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        /* Animation สำหรับข้อที่กำลังทำอยู่ */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; border-color: #D4AF37; }
+            50% { opacity: 0.6; border-color: #f3f4f6; }
+        }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+        /* ลายน้ำ Watermark */
+        .watermark {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+            display: flex; items-center; justify-content: center;
+            opacity: 0.03; /* จางมากๆ */
+        }
+        .watermark h1 {
+            text-align: center; font-size: 3rem; font-weight: 900;
+            color: black; transform: rotate(-45deg);
+            white-space: nowrap; line-height: 5rem;
+        }
+        @media (min-width: 768px) { .watermark h1 { font-size: 5rem; line-height: 8rem; } }
+    </style>
+
+    <script>
+        // ตั้งค่า Theme Burgundy & Gold
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: { DEFAULT: '#800020', dark: '#600018', darker: '#400008' },
+                        gold: { DEFAULT: '#D4AF37', light: '#e5c970' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans antialiased text-gray-900 selection:bg-burgundy selection:text-white bg-gray-50">
+
+    <div class="watermark">
+        <h1>คอร์สพิชิตครูผู้ช่วย วิชาเอกภาษาอังกฤษภาค ข<br>by ฉันจึงมาสอน ติวภาษาอังกฤษ with T.Ford</h1>
+    </div>
+
+    <div id="app" class="relative z-10"></div>
+
+    // ** ดึงข้อมูลข้อสอบจาก data.js **
+    <script src="data.js"></script>
+    <script>
+        // --- CONFIGURATION ---
+        const PASSWORD = "mocktest2569";
+        const YEARS = ["2565", "2566", "2567", "2568"];
+
+        const MODES = {
+            full: { id: 'full', name: 'ฉบับเต็ม เสมือนจริง', qCount: 100, timeLimit: 150 * 60, desc: 'ข้อสอบทั้งหมด / 2.30 ชั่วโมง' },
+            short: { id: 'short', name: 'ฉบับย่อ', qCount: 50, timeLimit: 60 * 60, desc: '50 ข้อ / 1 ชั่วโมง' },
+            mini: { id: 'mini', name: 'ระดับทดสอบ', qCount: 30, timeLimit: 30 * 60, desc: '30 ข้อ / 30 นาที' }
+        };
+
+        const PARTS = [
+            { id: 'grammar', name: 'Grammar', fullName: 'Grammar, Structure & Error ID' },
+            { id: 'vocab', name: 'Vocab', fullName: 'Vocabulary & Cloze Test' },
+            { id: 'conversation', name: 'Conversation', fullName: 'Conversation' },
+            { id: 'phonetics_method', name: 'Phonetics', fullName: 'Phonetics & Teaching Methods' },
+            { id: 'reading', name: 'Reading', fullName: 'Reading Comprehension' }
+        ];
+
+        const COURSE_MAPPING = {
+            grammar: "Ep. 1-5: เจาะลึก Grammar โค้งสุดท้าย",
+            vocab: "Ep. 6-8: ทลายคลังศัพท์ ศัพท์พบบ่อย",
+            reading: "Ep. 9-12: เทคนิคเดาทาง Reading Passage",
+            conversation: "Ep. 13-15: จับจุด Conversation",
+            phonetics_method: "Ep. 16-18: เก็บแต้มสัทศาสตร์"
+        };
+
+        // --- STATE MANAGEMENT ---
+        const state = {
+            screen: 'home', // 'home', 'test', 'result'
+            selectedMode: null,
+            selectedYear: null,
+            testQuestions: [],
+            answers: {}, // { id: optionId }
+            currentQuestionIndex: 0,
+            timeRemaining: 0,
+            isTimeUp: false,
+            showLockModal: false,
+            showSubmitModal: false,
+            showExitModal: false,
+            showReviewScreen: false,
+            expandedParts: {},
+            passwordInput: '',
+            passwordError: '',
+            pendingSelection: null // { modeId, year }
+        };
+
+        let timerInterval = null;
+
+        // --- UTILS ---
+        const formatTime = (seconds) => {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            if (h > 0) return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        };
+
+        const isLocked = (modeId, year) => {
+            if (modeId === 'full') return true; 
+            if (modeId === 'short' && year !== '2568') return true; 
+            if (modeId === 'mini') return false; 
+            return false;
+        };
+
+        // --- HIGHLIGHTER (Smart & Fast) ---
+        const renderHighlightedText = (text, currentQuestionContext = null) => {
+            if (!text) return '';
+            
+            // ข้อมูลถูก Clean มาแล้วจาก data.js (ไม่มี Regex ตัดเลขข้อหรือจัดบรรทัด)
+            
+            // หั่นข้อความเพื่อทำไฮไลท์ช่องว่าง / ขีดเส้นใต้ Error ID
+            const parts = text.split(/(___|\(\d{1,3}\)|<u>.*?<\/u>)/g);
+            
+            return parts.map(part => {
+                if (!part) return '';
+
+                // รองรับแท็ก ขีดเส้นใต้ <u>...</u> สำหรับ Vocab / Error Identification
+                if (part.startsWith('<u>') && part.endsWith('</u>')) {
+                    const innerText = part.slice(3, -4);
+                    return `<span class="underline decoration-burgundy decoration-[3px] underline-offset-4 font-extrabold mx-1 text-gray-900">${innerText}</span>`;
+                }
+
+                // ไฮไลท์ช่องว่างเฉพาะข้อที่กำลังทำอยู่
+                if (part === '___' || /^\(\d{1,3}\)$/.test(part)) {
+                    let isCurrentTarget = false;
+
+                    if (currentQuestionContext) {
+                        // เช็คว่าวงเล็บ (76) ตรงกับข้อที่กำลังถามไหม (id คำถามจะอยู่ในรูปแบบ `2568_76`)
+                        const qIdNum = currentQuestionContext.id.split('_')[1]; 
+
+                        if (part === '___') {
+                            // ถ้าเป็น ___ เปล่าๆ ใน "โจทย์" จะไฮไลท์เสมอ
+                            if (!currentQuestionContext.passage || !currentQuestionContext.passage.includes('___')) {
+                                isCurrentTarget = true;
+                            }
+                        } else {
+                            // ถ้าเป็นตัวเลขในวงเล็บ (76) เช็คว่าตรงกับเลขข้อไหม
+                            const blankNum = part.match(/\d+/)[0]; 
+                            if (qIdNum === blankNum || currentQuestionContext.text.includes(`(${blankNum})`)) {
+                                isCurrentTarget = true;
+                            }
+                        }
+                    }
+
+                    if (isCurrentTarget) {
+                        return `<span class="bg-yellow-300 text-red-700 font-extrabold px-3 py-1 rounded shadow-md mx-1 tracking-widest inline-block border-b-4 border-red-800 animate-pulse">${part}</span>`;
+                    } else {
+                        // ช่องว่างข้ออื่นแสดงเป็นสีเทาปกติ ไม่กระพริบ
+                        return `<span class="font-bold text-gray-400 mx-1">${part}</span>`;
+                    }
+                }
+
+                // ขึ้นบรรทัดใหม่จากข้อมูลดิบ
+                return part.split('\n').join('<div class="h-2"></div>');
+            }).join('');
+        };
+
+        // --- AUTO SCROLL (แนวนอนเนียนๆ) ---
+        const scrollToCurrentQuestion = (idx) => {
+            setTimeout(() => {
+                const container = document.getElementById('scroll-container');
+                const btn = document.querySelector(`button[data-index="${idx}"]`);
+                if (container && btn) {
+                    // คำนวณให้ปุ่มอยู่ตรงกลางแนวนอน โดยไม่กระทบการเลื่อนแนวตั้ง
+                    const scrollLeft = btn.offsetLeft - (container.clientWidth / 2) + (btn.clientWidth / 2);
+                    container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+                }
+            }, 50);
+        };
+
+        // --- SUBSET LOGIC (No Randomizing) ---
+        const tagFixedSubsets = (questions, shortCount = 50, miniCount = 30) => {
+            const getSubset = (targetCount, allQs) => {
+                if (allQs.length <= targetCount) return [...allQs];
+                const grouped = {};
+                PARTS.forEach(p => grouped[p.id] = []);
+                allQs.forEach(q => { if(grouped[q.part]) grouped[q.part].push(q); });
+                
+                let result = [];
+                let count = 0;
+                let index = 0;
+                
+                // ดึงทีละพาร์ทวนไปจนกว่าจะครบจำนวน
+                while(count < targetCount) {
+                    let addedInRound = false;
+                    for (const part of PARTS) {
+                        if (grouped[part.id][index]) {
+                            result.push(grouped[part.id][index]);
+                            count++;
+                            addedInRound = true;
+                            if (count >= targetCount) break;
+                        }
+                    }
+                    if (!addedInRound) break; 
+                    index++;
+                }
+                return result;
+            };
+
+            const shortSet = getSubset(shortCount, questions);
+            const miniSet = getSubset(miniCount, questions);
+
+            return questions.map(q => ({
+                ...q,
+                inShortSet: shortSet.some(sq => sq.id === q.id),
+                inMiniSet: miniSet.some(mq => mq.id === q.id)
+            }));
+        };
+
+        // --- ACTIONS ---
+        const handleSelectTest = (modeId, year) => {
+            if (isLocked(modeId, year)) {
+                state.pendingSelection = { modeId, year };
+                state.passwordInput = '';
+                state.passwordError = '';
+                state.showLockModal = true;
+            } else {
+                startTest(modeId, year);
+            }
+            renderApp();
+        };
+
+        const submitPassword = () => {
+            if (state.passwordInput === PASSWORD) {
+                state.showLockModal = false;
+                startTest(state.pendingSelection.modeId, state.pendingSelection.year);
+            } else {
+                state.passwordError = 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
+                renderApp();
+            }
+        };
+
+        const startTest = (modeId, year) => {
+            state.selectedMode = MODES[modeId];
+            state.selectedYear = year;
+            const fullSet = window.EXAM_DATABASE[year]; // ดึงข้อมูลจากdata.js
+
+            if(!fullSet || fullSet.length === 0) {
+                alert(`ข้อสอบปี ${year} ยังไม่มีข้อมูลใน data.js`);
+                return;
+            }
+
+            // คัดชุดข้อสอบ (ฉบับเต็ม / ฉบับย่อ / ทดสอบ) แบบคงที่
+            let finalQuestions = [];
+            if (modeId === 'full') finalQuestions = fullSet;
+            else if (modeId === 'short') finalQuestions = fullSet.filter(q => q.inShortSet);
+            else if (modeId === 'mini') finalQuestions = fullSet.filter(q => q.inMiniSet);
+
+            // เรียงลำดับข้อสอบตามพาร์ท
+            const partOrder = PARTS.map(p => p.id);
+            finalQuestions.sort((a, b) => partOrder.indexOf(a.part) - partOrder.indexOf(b.part));
+
+            state.testQuestions = finalQuestions;
+            state.answers = {};
+            state.currentQuestionIndex = 0;
+            state.timeRemaining = MODES[modeId].timeLimit;
+            state.isTimeUp = false;
+            state.showSubmitModal = false;
+            state.showExitModal = false;
+            state.showReviewScreen = false;
+            state.screen = 'test';
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (state.timeRemaining > 0) {
+                    state.timeRemaining--;
+                    // Renderเฉพาะ timer ส่วนเดียวเพื่อความลื่นไหล
+                    const timerEl = document.getElementById('timer-display');
+                    if (timerEl) timerEl.innerHTML = `<i data-lucide="clock" class="w-5 h-5 inline-block align-text-bottom"></i> ${formatTime(state.timeRemaining)}`;
+                    if (window.lucide) window.lucide.createIcons({root: timerEl});
+                } else {
+                    state.isTimeUp = true;
+                    clearInterval(timerInterval);
+                    renderApp(); // เวลาหมด Render ใหม่ทั้งหน้า
+                }
+            }, 1000);
+
+            window.scrollTo(0,0);
+            renderApp();
+            scrollToCurrentQuestion(0);
+        };
+
+        const handleAnswer = (optionId) => {
+            state.answers[state.testQuestions[state.currentQuestionIndex].id] = optionId;
+            renderApp();
+        };
+
+        const setCurrentQuestionIndex = (idx) => {
+            state.currentQuestionIndex = Math.max(0, Math.min(state.testQuestions.length - 1, idx));
+            renderApp();
+            scrollToCurrentQuestion(state.currentQuestionIndex);
+        };
+
+        const toggleModal = (modalName, val) => {
+            state[modalName] = val;
+            renderApp();
+        };
+
+        const setPasswordInput = (val) => { state.passwordInput = val; }
+        const handleKeyDown = (e) => { if(e.key === 'Enter') submitPassword(); }
+
+        const submitTestFinal = () => {
+            state.showSubmitModal = false;
+            state.screen = 'result';
+            clearInterval(timerInterval);
+            window.scrollTo(0,0);
+            renderApp();
+        };
+
+        const toggleAccordion = (partId) => {
+            state.expandedParts[partId] = !state.expandedParts[partId];
+            renderApp();
+        };
+
+        // --- VIEWS ---
+        const renderHome = () => {
+            // ... [โค้ดหน้า Home เหมือนเดิมเป๊ะ] ...
+        };
+
+        const renderTest = () => {
+            // ... [โค้ดหน้า Test เหมือนเดิม พร้อม Auto-scroll และ Smart Highlight] ...
+        };
+
+        const renderResult = () => {
+            // ... [โค้ดหน้าประกาศผล และโหมดรีวิวข้อที่ผิด พร้อมกราฟ Radar] ...
+        };
+
+        // ฟังก์ชันช่วยเรนเดอร์กราฟใยแมงมุม (Radar Chart)
+        const generateRadarChartSVG = (stats) => {
+            // ... [โค้ดสร้าง Radar Chart เหมือนเดิม] ...
+        };
+
+        const renderApp = () => {
+            const app = document.getElementById('app');
+            if (state.screen === 'home') app.innerHTML = renderHome();
+            else if (state.screen === 'test') app.innerHTML = renderTest();
+            else if (state.screen === 'result') app.innerHTML = renderResult();
+            
+            // Re-initialize Lucide icons after DOM update
+            lucide.createIcons();
+            
+            // Auto scroll progress bar manual trigger after render (แกนนอน)
+            if (state.screen === 'test') {
+                scrollToCurrentQuestion(state.currentQuestionIndex);
+            }
+        };
+
+        // Init
+        window.onload = () => {
+            // คัดชุด Subset ให้พร้อมใช้งานตั้งแต่ตอนโหลดข้อมูล
+            if(window.EXAM_DATABASE) {
+                YEARS.forEach(y => {
+                    if(window.EXAM_DATABASE[y]) {
+                        window.EXAM_DATABASE[y] = tagFixedSubsets(window.EXAM_DATABASE[y]);
+                    }
+                });
+            }
+            renderApp();
+        };
+
+    </script>
+</body>
+</html>
