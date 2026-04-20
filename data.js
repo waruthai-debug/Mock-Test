@@ -2210,3 +2210,147 @@ window.EXAM_DATABASE["2568"] = [
     answer: "c"
   }
 ];
+window.EXAM_DATABASE["2569"] = window.EXAM_DATABASE["2569"] || [];
+
+window.EXAM_DATABASE["2569"].push(
+  {
+    id: "2569_1", 
+    part: "conversation",
+    question: "A: Excuse me, is anyone sitting here?\nB: ________________________.",
+    options: { a: "No, please have a seat.", b: "Yes, I sit here yesterday.", c: "The chair is very cheap.", d: "I don’t know anyone." },
+    answer: "a"
+  },
+  {
+    id: "2569_2", 
+    part: "conversation",
+    question: "A: Could I use your phone for a moment?\nB: ________________________.",
+    options: { a: "Yes, I used it already.", b: "Sure. Here you are.", c: "The moment is very short.", d: "My phone is in the bag yesterday." },
+    answer: "b"
+  },
+  {
+    id: "2569_3", 
+    part: "conversation",
+    question: "Questions 3-4 refer to the dialogue below.\nClerk: Good morning. Can I help you?\nWoman: Yes, I want to send this package to Chiang Rai. (1)\nClerk: It will cost 80 baht.\nWoman: That’s fine. (2)\nClerk: It will take about two days.\nWoman: Okay. Please send it today.\nClerk: Sure. Please write the name and address here.\n\nChoose the best alternative for (1):",
+    options: { a: "How much will it cost?", b: "Who costs the package?", c: "How many package do you send?", d: "When do you buy the box?" },
+    answer: "a"
+  },
+  {
+    id: "2569_4", 
+    part: "conversation",
+    question: "Questions 3-4 refer to the dialogue below.\nClerk: Good morning. Can I help you?\nWoman: Yes, I want to send this package to Chiang Rai. (1)\nClerk: It will cost 80 baht.\nWoman: That’s fine. (2)\nClerk: It will take about two days.\nWoman: Okay. Please send it today.\nClerk: Sure. Please write the name and address here.\n\nChoose the best alternative for (2):",
+    options: { a: "Is Chiang Rai very far?", b: "How long will it take?", c: "Do you like this package?", d: "Where are two days?" },
+    answer: "b"
+  },
+  {
+    id: "2569_5", 
+    part: "conversation",
+    question: "Situation: Mark is visiting his friend’s house for the first time. His friend’s mother opens the door for him.\nWhat should Mark say?",
+    options: { a: "Open the door quickly.", b: "Where is your son now?", c: "Good afternoon, ma’am. I’m Mark.", d: "I come here because I want." },
+    answer: "c"
+  },
+  {
+    id: "2569_6", 
+    part: "vocab",
+    question: "The manager will ______ the new policy at the meeting tomorrow.",
+    options: { a: "announce", b: "borrow", c: "arrive", d: "travel" },
+    answer: "a"
+  },
+  {
+    id: "2569_7", 
+    part: "grammar",
+    question: "She suggested ______ the report again before sending it.",
+    options: { a: "check", b: "checked", c: "to check", d: "checking" },
+    answer: "d"
+  },
+  {
+    id: "2569_8", 
+    part: "vocab",
+    question: "Because of the economic ______, many stores closed early last year.",
+    options: { a: "recession", b: "reflection", c: "procession", d: "discussion" },
+    answer: "a"
+  },
+  {
+    id: "2569_9", 
+    part: "grammar",
+    question: "By the time we get to the cinema, the movie ______.",
+    options: { a: "starts", b: "started", c: "will have started", d: "has started" },
+    answer: "c"
+  },
+  {
+    id: "2569_10", 
+    part: "vocab",
+    question: "His explanation was very ______, so everyone understood it.",
+    options: { a: "clear", b: "lucky", c: "narrow", d: "polite" },
+    answer: "a"
+  },
+  {
+    id: "2569_11", 
+    part: "grammar",
+    question: "Neither the teacher nor the students ______ ready for the trip.",
+    options: { a: "is", b: "are", c: "was", d: "has" },
+    answer: "b"
+  },
+  {
+    id: "2569_12", 
+    part: "vocab",
+    question: "The committee decided to ______ the old rule after many complaints.",
+    options: { a: "revise", b: "invite", c: "divide", d: "measure" },
+    answer: "a"
+  },
+  {
+    id: "2569_13", 
+    part: "grammar",
+    question: "I am looking forward to ______ from you soon.",
+    options: { a: "hear", b: "hearing", c: "heard", d: "to hear" },
+    answer: "b"
+  },
+  {
+    id: "2569_14", 
+    part: "vocab",
+    question: "The CEO stayed calm and kept her ______ during the difficult interview.",
+    options: { a: "anger", b: "panic", c: "composure", d: "worry" },
+    answer: "c"
+  },
+  {
+    id: "2569_15", 
+    part: "grammar",
+    question: "If he ______ harder, he would have passed the test.",
+    options: { a: "studied", b: "had studied", c: "studies", d: "would study" },
+    answer: "b"
+  },
+  {
+    id: "2569_16", 
+    part: "reading",
+    question: "Passage:\nAnna went to the public library on Saturday morning. She wanted to return two books and borrow a new one. When she arrived, she saw a notice on the door. It said the library would open at 10:30 because there was a staff meeting. Anna waited at a small park across the street. When the library opened, she returned the books and borrowed a science magazine.\n\nWhy did Anna go to the library?",
+    options: { a: "To buy a science magazine", b: "To return books and borrow a new one", c: "To meet the staff", d: "To read in the park" },
+    answer: "b"
+  },
+  {
+    id: "2569_17", 
+    part: "reading",
+    question: "Passage:\nAnna went to the public library on Saturday morning. She wanted to return two books and borrow a new one. When she arrived, she saw a notice on the door. It said the library would open at 10:30 because there was a staff meeting. Anna waited at a small park across the street. When the library opened, she returned the books and borrowed a science magazine.\n\nWhat did the notice on the door say?",
+    options: { a: "The library would open at 10:30.", b: "The library was closed all week.", c: "The library had no magazines.", d: "The library would move next month." },
+    answer: "a"
+  },
+  {
+    id: "2569_18", 
+    part: "reading",
+    question: "Passage:\nAnna went to the public library on Saturday morning. She wanted to return two books and borrow a new one. When she arrived, she saw a notice on the door. It said the library would open at 10:30 because there was a staff meeting. Anna waited at a small park across the street. When the library opened, she returned the books and borrowed a science magazine.\n\nWhy did Anna wait at the park?",
+    options: { a: "She wanted to play there.", b: "She was waiting for her friend.", c: "The library was not open yet.", d: "She forgot her books at home." },
+    answer: "c"
+  },
+  {
+    id: "2569_19", 
+    part: "reading",
+    question: "Passage:\nAnna went to the public library on Saturday morning. She wanted to return two books and borrow a new one. When she arrived, she saw a notice on the door. It said the library would open at 10:30 because there was a staff meeting. Anna waited at a small park across the street. When the library opened, she returned the books and borrowed a science magazine.\n\nWhat did Anna borrow from the library?",
+    options: { a: "a history book", b: "a science magazine", c: "a newspaper", d: "a map" },
+    answer: "b"
+  },
+  {
+    id: "2569_20", 
+    part: "reading",
+    question: "Passage:\nAnna went to the public library on Saturday morning. She wanted to return two books and borrow a new one. When she arrived, she saw a notice on the door. It said the library would open at 10:30 because there was a staff meeting. Anna waited at a small park across the street. When the library opened, she returned the books and borrowed a science magazine.\n\nWhat should Anna do before leaving the library?",
+    options: { a: "return the science magazine", b: "talk at the staff meeting", c: "borrow the books again", d: "take the magazine with her" },
+    answer: "d"
+  }
+);
