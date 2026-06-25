@@ -1997,7 +1997,7 @@ window.EXAM_DATABASE["2568"] = [
     id: "2568_65", part: "phonetics_method",
     question: "Which of the following words has the same vowel sound as \"sit\"?",
     options: { a: "set", b: "sight", c: "seat", d: "ship" },
-    answer: "a"
+    answer: "d"
   },
   {
     id: "2568_66", part: "reading",
@@ -2039,7 +2039,7 @@ window.EXAM_DATABASE["2568"] = [
     id: "2568_72", part: "reading",
     question: "Original: The best cakes are baked in our kitchen, where the chefs still use only traditional European methods.\n\nChoose the sentence that has the same meaning as the original sentence.",
     options: { a: "Our chefs use the finest ingredients to make the cakes.", b: "Our kitchen is known for fine cakes made with traditional methods.", c: "In our kitchen, where chefs use only traditional European methods, the best cakes are baked.", d: "The best cakes are from our kitchen, although the chefs use traditional methods." },
-    answer: "b"
+    answer: "c"
   },
   {
     id: "2568_73", part: "reading",
