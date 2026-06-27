@@ -39,7 +39,7 @@ window.EXAM_DATABASE["2565"] = [
   {
     id: "2565_6",
     part: "grammar",
-    question: "The ___ humorous commercials",
+    question: "The company produced ___ humorous commercials.",
     options: { a: "create", b: "creative", c: "creatively", d: "creativity" },
     answer: "c"
   },
@@ -792,7 +792,7 @@ window.EXAM_DATABASE["2566"] = [
   {
     id: "2566_55", part: "reading",
     question: "If you went to London, you would see the Queen of England. What can you infer from the passage?",
-    options: { a: "If you go to London, you will see the Queen of England.", b: "If you've gone to London, you'd have seen the Queen of England.", c: "You didn't see the queen and you didn't went to London.", d: "You would see the Queen of England if you went to London." },
+    options: { a: "If you go to London, you will see the Queen of England.", b: "If you've gone to London, you'd have seen the Queen of England.", c: "You didn't see the queen and you didn't go to London.", d: "You would see the Queen of England if you went to London." },
     answer: "c"
   },
   {
@@ -811,13 +811,13 @@ window.EXAM_DATABASE["2566"] = [
     id: "2566_58", part: "phonetics_method",
     question: "Which teaching method emphasizes the use of authentic materials, such as newspaper articles or videos?",
     options: { a: "The communicative approach", b: "The audio-lingual method", c: "The task-based approach", d: "The content-based approach" },
-    answer: "b"
+    answer: "a"
   },
   {
     id: "2566_59", part: "phonetics_method",
     question: "Which teaching method emphasizes the importance of listening and responding to language before speaking it, and encourages the use of physical movements to reinforce learning?",
     options: { a: "Grammar Translation Method", b: "The task-based approach", c: "Direct Method", d: "Total Physical Response" },
-    answer: "c"
+    answer: "d"
   },
   {
     id: "2566_60", part: "phonetics_method",
@@ -941,7 +941,7 @@ window.EXAM_DATABASE["2566"] = [
   },
   {
     id: "2566_80", part: "grammar",
-    question: "Four week later, he returned with enough knowledge to teach each other.",
+    question: "Four week later, he returned with enough knowledge to teach others.",
     options: { a: "Four week later", b: "returned", c: "knowledge", d: "other" },
     answer: "a"
   },
@@ -1257,7 +1257,7 @@ window.EXAM_DATABASE["2567"] = [
     id: "2567_32", part: "vocab",
     question: "For long-term planning, what the developing countries need is sustainable development.\n\nWhat's the closest meaning of the bold/underlined word?",
     options: { a: "susceptible", b: "maintainable", c: "renewable", d: "Lavish" },
-    answer: "c"
+    answer: "b"
   },
   {
     id: "2567_33", part: "vocab",
@@ -1335,7 +1335,7 @@ window.EXAM_DATABASE["2567"] = [
     id: "2567_45", part: "vocab",
     question: "Cloze test 1:\nMany animals have camouflage. The white polar bear blends in with the snow. Insects such as the praying mantis can hardly be seen in their surroundings. This (41) camouflage protects animals from their enemies. A camouflage is a(n) (42) to make an object blend in with its surroundings.\nCamouflage is often used in war to hide soldiers, guns, tanks, and equipment from the enemy. Tanks, trucks, airplanes, and other war (43) are more difficult to see in the desert if they are painted tan. If they are used in dense forest, tanks can be painted green and brown to blend it with the leaves and branches. Khaki uniforms blend in with soil.\nUniforms (44) in splotchy patterns can make soldiers look like leaves and grass. Airports have been camouflaged to make them look like villages-churches, schools, and gardens are painted on the runways-and empty ground a few miles away is made to look like an airport. Camouflage today is difficult because modern (45) such as radar and cameras that use special films are not easy to fool.\n\nWhat's the BEST answer for (45)?",
     options: { a: "systems", b: "experiments", c: "inventions", d: "activities" },
-    answer: "a"
+    answer: "c"
   },
   {
     id: "2567_46", part: "vocab",
@@ -1370,14 +1370,14 @@ window.EXAM_DATABASE["2567"] = [
   {
     id: "2567_51", part: "grammar",
     question: "Which is correct?",
-    options: { a: "Bee lives in a quite old house.", b: "Bee lives in quite house old.", c: "Bee lives in an old quite house.", d: "Bee lives in an old house quite." },
+    options: { a: "Bee lives in quite an old house.", b: "Bee lives in quite house old.", c: "Bee lives in an old quite house.", d: "Bee lives in an old house quite." },
     answer: "a"
   },
   {
     id: "2567_52", part: "grammar",
     question: "Everyone _____ that Tokyo is the capital of Italy.",
     options: { a: "know", b: "knows", c: "knew", d: "known" },
-    answer: "c"
+    answer: "b"
   },
   {
     id: "2567_53", part: "grammar",
@@ -1876,8 +1876,8 @@ window.EXAM_DATABASE["2568"] = [
   {
     id: "2568_45", part: "grammar",
     question: "A: What are your plans for tomorrow afternoon?\nB: I ___ a meeting with my supervisor then.",
-    options: { a: "have", b: "will have", c: "will have had", d: "will be having" },
-    answer: "b"
+    options: { a: "have", b: "had", c: "will have had", d: "will be having" },
+    answer: "d"
   },
   {
     id: "2568_46", part: "grammar",
@@ -1925,7 +1925,7 @@ window.EXAM_DATABASE["2568"] = [
     id: "2568_53", part: "grammar",
     question: "My grandfather, 1) <u>knowing his health</u> 2) <u>was declining</u>, 3) <u>has decided</u> 4) <u>to write</u> last year.\n\nChoose the grammatically incorrect part:",
     options: { a: "knowing his health", b: "was declining", c: "has decided", d: "to write" },
-    answer: "d"
+    answer: "c"
   },
   {
     id: "2568_54", part: "grammar",
@@ -2038,7 +2038,7 @@ window.EXAM_DATABASE["2568"] = [
   {
     id: "2568_72", part: "reading",
     question: "Original: The best cakes are baked in our kitchen, where the chefs still use only traditional European methods.\n\nChoose the sentence that has the same meaning as the original sentence.",
-    options: { a: "Our chefs use the finest ingredients to make the cakes.", b: "Our kitchen is known for fine cakes made with traditional methods.", c: "In our kitchen, where chefs use only traditional European methods, the best cakes are baked.", d: "The best cakes are from our kitchen, although the chefs use traditional methods." },
+    options: { a: "Our chefs use the finest ingredients to make the cakes.", b: "Our kitchen is known for fine cakes made with tradition.", c: "In our kitchen, where chefs use only traditional European methods, the best cakes are baked.", d: "The best cakes are from our kitchen, although the chefs use traditional methods." },
     answer: "c"
   },
   {
@@ -2105,7 +2105,7 @@ window.EXAM_DATABASE["2568"] = [
     id: "2568_83", part: "reading",
     question: "Passage 1\nRussians generally don't celebrate birthdays before the actual day because this is considered bad luck. There is a belief that the birthday boy or girl who celebrates a birthday in advance may not live to see his or her special day. Also, many people don't celebrate the 40th because this number is associated with death. In Russia, a birthday celebration is usually a great dinner with many dishes. It is a custom for the birthday person to provide the feast, and this includes paying for dinner if the celebration takes place in a restaurant. Russians do not give stone kinds of presents to birthday persons. Knives and scissors symbolize future conflict and are therefore seen as a bad omen. Likewise, scarves and handkerchiefs represent sorrow and clocks are a sign of departure. An empty purse is believed to cause poverty. Flowers given for a birthday celebration must be in odd number. An even number of flowers indicates misfortune and even death.\n\nFor his girlfriend's birthday, what should Vladimir, a Russian boy, do?",
     options: { a: "Say \"Happy Birthday\" to her beforehand.", b: "Give her a bouquet with 8 red roses on her birthday.", c: "Give her a purse with a 10-ruble banknote in it on her birthday.", d: "I have a dinner party for her the night before her actual birthday." },
-    answer: "b"
+    answer: "c"
   },
   {
     id: "2568_84", part: "reading",
