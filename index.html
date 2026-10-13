@@ -67,7 +67,6 @@
     
     <script>
         // --- CONFIGURATION ---
-        const PASSWORD = "mocktest2569";
         const YEARS = ["2565", "2566", "2567", "2568", "2569"];
 
         const MODES = {
@@ -102,13 +101,9 @@
             currentQuestionIndex: 0,
             timeRemaining: 0,
             isTimeUp: false,
-            showLockModal: false,
             showSubmitModal: false,
             showExitModal: false,
-            showReviewScreen: false,
-            passwordInput: '',
-            passwordError: '',
-            pendingSelection: null 
+            showReviewScreen: false
         };
 
         let timerInterval = null;
@@ -120,13 +115,6 @@
             const s = seconds % 60;
             if (h > 0) return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        };
-
-        const isLocked = (modeId, year) => {
-            if (modeId === 'full') return true; 
-            if (modeId === 'short' && year !== '2568') return true; 
-            if (modeId === 'mini') return false; 
-            return false;
         };
 
         // --- HIGHLIGHTER ---
@@ -212,25 +200,7 @@
 
         // --- ACTIONS ---
         const handleSelectTest = (modeId, year) => {
-            if (isLocked(modeId, year)) {
-                state.pendingSelection = { modeId, year };
-                state.passwordInput = '';
-                state.passwordError = '';
-                state.showLockModal = true;
-            } else {
-                startTest(modeId, year);
-            }
-            renderApp();
-        };
-
-        const submitPassword = () => {
-            if (state.passwordInput === PASSWORD) {
-                state.showLockModal = false;
-                startTest(state.pendingSelection.modeId, state.pendingSelection.year);
-            } else {
-                state.passwordError = 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
-                renderApp();
-            }
+            startTest(modeId, year);
         };
 
         const startTest = (modeId, year) => {
@@ -297,9 +267,6 @@
             renderApp();
         };
 
-        const setPasswordInput = (val) => { state.passwordInput = val; }
-        const handleKeyDown = (e) => { if(e.key === 'Enter') submitPassword(); }
-
         const submitTestFinal = () => {
             state.showSubmitModal = false;
             state.screen = 'result';
@@ -334,15 +301,13 @@
                     <div class="flex flex-col gap-3">
                 `;
                 Object.values(MODES).forEach(mode => {
-                    const locked = isLocked(mode.id, year);
-                    const icon = locked ? '<i data-lucide="lock" class="w-5 h-5 text-gray-400"></i>' : '<i data-lucide="play-circle" class="w-5 h-5 text-green-600"></i>';
                     html += `
                     <button onclick="handleSelectTest('${mode.id}', '${year}')" class="flex items-center justify-between p-4 rounded-lg bg-white hover:border-gold hover:ring-1 ring-gold transition group border border-gray-200 shadow-sm text-left">
                         <div>
                             <div class="font-bold text-gray-800 text-lg mb-1">${mode.name}</div>
                             <div class="text-sm text-gray-500">${mode.desc}</div>
                         </div>
-                        ${icon}
+                        <i data-lucide="play-circle" class="w-5 h-5 text-green-600"></i>
                     </button>`;
                 });
                 html += `</div></div>`;
@@ -350,24 +315,6 @@
 
             html += `</div></div></div>`;
 
-            if (state.showLockModal) {
-                html += `
-                <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-                    <div class="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full border-t-4 border-burgundy">
-                        <div class="text-center mb-6">
-                            <i data-lucide="lock" class="w-12 h-12 mx-auto text-burgundy mb-2"></i>
-                            <h3 class="text-2xl font-black text-gray-800">โหมดนี้ถูกล็อค</h3>
-                            <p class="text-gray-500 text-sm mt-2">ชุดข้อสอบนี้สงวนสิทธิ์สำหรับผู้เรียนคอร์สติวเท่านั้น กรุณาใส่รหัสผ่านเพื่อเข้าสอบ</p>
-                        </div>
-                        <input type="password" value="${state.passwordInput}" oninput="setPasswordInput(this.value)" onkeydown="handleKeyDown(event)" class="w-full border-2 border-gray-200 p-3 rounded-lg mb-2 focus:outline-none focus:border-burgundy transition" placeholder="ใส่รหัสผ่านที่นี่...">
-                        ${state.passwordError ? `<p class="text-red-500 text-sm mb-4 font-bold"><i data-lucide="alert-circle" class="w-4 h-4 inline align-text-bottom"></i> ${state.passwordError}</p>` : '<div class="h-6"></div>'}
-                        <div class="flex justify-end gap-3 mt-2">
-                            <button onclick="toggleModal('showLockModal', false)" class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg font-bold">ยกเลิก</button>
-                            <button onclick="submitPassword()" class="px-6 py-2.5 bg-burgundy text-white rounded-lg font-bold hover:bg-red-900 shadow-md">ยืนยัน</button>
-                        </div>
-                    </div>
-                </div>`;
-            }
             return html;
         };
 
