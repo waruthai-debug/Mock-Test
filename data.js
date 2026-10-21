@@ -1003,7 +1003,7 @@ window.EXAM_DATABASE["2566"] = [
     id: "2566_90", part: "reading",
     question: "The ongoing COVID-19 pandemic has affected nearly every aspect of daily life around the world. From work to school to social activities, people have had to make significant adjustments to prevent the spread of the virus. One of the most challenging aspects of the pandemic has been the impact on mental health, as many people have struggled with feelings of anxiety, isolation, and depression. However, there have also been some positive outcomes of the pandemic, including increased awareness of the importance of public health and a renewed sense of community spirit.\n\nWhat has been the impact of the pandemic on community spirit?",
     options: { a: "It has decreased due to social isolation", b: "It has increased due to a renewed sense of togetherness", c: "It has only affected certain groups of people", d: "It has had no effect" },
-    answer: "a"
+    answer: "b"
   },
   {
     id: "2566_91", part: "reading",
